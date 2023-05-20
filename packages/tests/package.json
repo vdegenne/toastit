@@ -1,0 +1,10 @@
+{
+	"name": "tests",
+    "type": "module",
+    "scripts": {
+        "serve": "vite"
+    },
+	"devDependencies": {
+		"toastit": "^0.0.1"
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"type": "module",
+	"workspaces": [
+		"packages/*"
+	],
+	"devDependencies": {
+		"@material/mwc-snackbar": "^0.27.0",
+		"esbuild": "^0.17.19",
+		"shx": "^0.3.4",
+		"typescript": "^5.0.4",
+		"vite": "^4.3.5",
+		"wireit": "^0.9.5"
+	}
+}
