@@ -2,11 +2,11 @@
 	"name": "tests",
 	"type": "module",
 	"scripts": {
-		"dev": "vite"
+		"dev": "rm -rf node_modules/.vite && vite"
 	},
 	"devDependencies": {
 		"@material/web": "^1.0.0-pre.12",
 		"material-3-prompt-dialog": "^0.6.1",
-		"toastit": "^0.0.4"
+		"toastit": "*"
 	}
 }

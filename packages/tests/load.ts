@@ -1,6 +1,5 @@
 import {materialDialog} from 'material-3-prompt-dialog';
 import toast from 'toastit';
-// import {m} from 'material-3-prompt-dialog';
 
 materialDialog({
 	content: () => 'Hello Material Team',

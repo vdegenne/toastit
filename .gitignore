@@ -1,6 +1,6 @@
 node_modules
 out
 **/.wireit
-toast/index.js
-toast/index.d.ts
-toast/index.js.LEGAL.txt
+packages/toastit/index.js
+packages/toastit/index.d.ts
+packages/toastit/index.js.LEGAL.txt
