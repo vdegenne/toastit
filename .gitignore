@@ -1,3 +1,5 @@
 node_modules
 out
 **/.wireit
+toast/index.js
+toast/index.d.ts
