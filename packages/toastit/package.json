@@ -58,5 +58,8 @@
 		"index.d.ts",
 		"index.js",
 		"index.js.LEGAL.txt"
-	]
+	],
+	"devDependencies": {
+		"lit": "^2.7.6"
+	}
 }
