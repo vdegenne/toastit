@@ -1,13 +1,16 @@
 {
-  "compilerOptions": {
-    "module": "ES2022",
-    "target": "ESNext",
-    "moduleResolution": "Node",
-    "outDir": "lib",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true
-  },
-  "include": ["src/**/*"],
-  "exclude": []
+	"compilerOptions": {
+		"module": "ESNext",
+		"target": "ESNext",
+		"moduleResolution": "Node",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"outDir": "lib",
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+		"noImplicitAny": true
+	},
+	"include": ["src/**/*"],
+	"exclude": []
 }

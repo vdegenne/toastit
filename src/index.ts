@@ -1,10 +1,14 @@
 import '@material/mwc-snackbar';
+import {type Snackbar} from '@material/mwc-snackbar';
 import {LitElement, css, html} from 'lit';
 
 class ToastIt extends LitElement {
-	#timeout;
+	#timeout: number;
 
-	constructor(readonly message: any, readonly timeoutMs = 3000) {
+	constructor(
+		readonly message: any,
+		readonly timeoutMs = 3000,
+	) {
 		super();
 	}
 
@@ -12,22 +16,22 @@ class ToastIt extends LitElement {
 		return this.renderRoot.querySelector('dialog')!;
 	}
 	get snackbar() {
-		return this.renderRoot.querySelector('mwc-snackbar')!;
+		return this.renderRoot.querySelector('mwc-snackbar-toastit') as Snackbar;
 	}
 
 	render() {
 		return html`<!---->
 			<!-- <dialog> -->
-			<mwc-snackbar
+			<mwc-snackbar-toastit
 				popover
 				timeoutMs="-1"
-				@toggle=${(e) => {
-					if (e.newState === 'closed') {
+				@toggle=${(event: any) => {
+					if (event.newState === 'closed') {
 						clearTimeout(this.#timeout);
 						this.remove();
 					}
 				}}
-			></mwc-snackbar>
+			></mwc-snackbar-toastit>
 			<!-- </dialog> --> `;
 	}
 	static styles = css`
@@ -68,7 +72,7 @@ window.customElements.define('toast-it', ToastIt);
 let previousToaster: ToastIt = null;
 
 export default function (message: any, timeoutMs = 3000) {
-	return new Promise(async (resolve: (value: void) => void, reject) => {
+	return new Promise(async (_resolve: (value: void) => void, _reject) => {
 		if (previousToaster) {
 			previousToaster.close();
 		}

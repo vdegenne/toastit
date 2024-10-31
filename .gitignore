@@ -1,6 +1,6 @@
 node_modules
-out
+lib
 **/.wireit
-packages/toastit/index.js
-packages/toastit/index.d.ts
-packages/toastit/index.js.LEGAL.txt
+index.js
+index.d.ts
+index.js.LEGAL.txt
