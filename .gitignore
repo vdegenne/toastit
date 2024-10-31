@@ -1,6 +1,6 @@
 node_modules
 lib
-**/.wireit
+.wireit
 index.js
 index.d.ts
 index.js.LEGAL.txt
