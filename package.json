@@ -1,14 +1,70 @@
 {
-	"type": "module",
-	"workspaces": [
-		"packages/*"
-	],
-	"devDependencies": {
-		"@material/mwc-snackbar": "^0.27.0",
-		"esbuild": "^0.17.19",
-		"shx": "^0.3.4",
-		"typescript": "^5.0.4",
-		"vite": "^4.3.5",
-		"wireit": "^0.9.5"
-	}
+  "name": "toastit",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "wireit",
+    "build:ts": "wireit",
+    "build:move-declarations": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "dependencies": [
+        "build:ts",
+        "build:esbuild"
+      ]
+    },
+    "build:ts": {
+      "command": "tsc --pretty",
+      "clean": "if-file-deleted",
+      "files": [
+        "src",
+        "tsconfig.json"
+      ],
+      "output": [
+        "out/index.d.ts",
+        "out/index.js"
+      ]
+    },
+    "build:move-declarations": {
+      "command": "shx mv ./out/**/*.d.ts .",
+      "dependencies": [
+        "build:ts"
+      ],
+      "files": [
+        "out/**/*.d.ts"
+      ],
+      "output": [
+        "*.d.ts"
+      ]
+    },
+    "build:esbuild": {
+      "command": "node esbuild.config.js",
+      "dependencies": [
+        "build:ts",
+        "build:move-declarations"
+      ],
+      "files": [
+        "out/index.js",
+        "esbuild.config.js"
+      ],
+      "output": [
+        "index.js"
+      ]
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "index.js.LEGAL.txt"
+  ],
+  "devDependencies": {
+    "lit": "^3.2.1",
+    "@material/mwc-snackbar": "^0.27.0",
+    "esbuild": "^0.17.19",
+    "shx": "^0.3.4",
+    "typescript": "^5.0.4",
+    "wireit": "^0.9.5"
+  }
 }
