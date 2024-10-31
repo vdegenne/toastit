@@ -1,7 +1,13 @@
 {
 	"name": "toastit",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"type": "module",
+	"exports": {
+		".": {
+			"default": "./index.js",
+			"types": "./lib/index.d.ts"
+		}
+	},
 	"scripts": {
 		"build": "wireit",
 		"build:ts": "wireit",
@@ -41,9 +47,9 @@
 		}
 	},
 	"files": [
-		"index.d.ts",
-		"index.js",
-		"index.js.LEGAL.txt"
+		"./index.js",
+		"./lib",
+		"./index.js.LEGAL.txt"
 	],
 	"devDependencies": {
 		"lit": "^3.2.1",
