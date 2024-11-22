@@ -8,6 +8,7 @@ class ToastIt extends LitElement {
 	constructor(
 		readonly message: any,
 		readonly timeoutMs = 3000,
+		readonly leading = false,
 	) {
 		super();
 	}
@@ -25,6 +26,7 @@ class ToastIt extends LitElement {
 			<mwc-snackbar-toastit
 				popover
 				timeoutMs="-1"
+				?leading=${this.leading}
 				@toggle=${(event: any) => {
 					if (event.newState === 'closed') {
 						clearTimeout(this.#timeout);
