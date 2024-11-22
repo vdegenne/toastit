@@ -2,15 +2,26 @@ import '@material/mwc-snackbar';
 import {type Snackbar} from '@material/mwc-snackbar';
 import {LitElement, css, html} from 'lit';
 
+interface Options {
+	timeoutMs: number;
+	leading: boolean;
+	styles?: string;
+	debug: boolean;
+}
+
 class ToastIt extends LitElement {
 	#timeout: number;
 
 	constructor(
 		readonly message: any,
-		readonly timeoutMs = 3000,
-		readonly leading = false,
+		readonly options?: Options,
 	) {
 		super();
+		this.options = Object.assign(
+			{},
+			{timeoutMs: 3000, leading: false, debug: false} as Options,
+			this.options,
+		);
 	}
 
 	get dialog() {
@@ -21,12 +32,16 @@ class ToastIt extends LitElement {
 	}
 
 	render() {
+		if (this.options.debug) {
+			console.log(this.options);
+		}
 		return html`<!---->
 			<!-- <dialog> -->
 			<mwc-snackbar-toastit
 				popover
 				timeoutMs="-1"
-				?leading=${this.leading}
+				styles=${this.options.styles ?? ''}
+				?leading=${this.options.leading}
 				@toggle=${(event: any) => {
 					if (event.newState === 'closed') {
 						clearTimeout(this.#timeout);
@@ -62,7 +77,7 @@ class ToastIt extends LitElement {
 
 		this.#timeout = setTimeout(() => {
 			this.snackbar.close();
-		}, this.timeoutMs);
+		}, this.options.timeoutMs);
 	}
 
 	close() {
@@ -73,13 +88,13 @@ window.customElements.define('toast-it', ToastIt);
 
 let previousToaster: ToastIt = null;
 
-export default function (message: any, timeoutMs = 3000) {
+export default function (message: any, options?: Partial<Options>) {
 	return new Promise(async (_resolve: (value: void) => void, _reject) => {
 		if (previousToaster) {
 			previousToaster.close();
 		}
 
-		const toaster = new ToastIt(message, timeoutMs);
+		const toaster = new ToastIt(message, options as Options);
 		previousToaster = toaster;
 
 		document.body.prepend(toaster);
