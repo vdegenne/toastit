@@ -40,7 +40,7 @@ class ToastIt extends LitElement {
 			<mwc-snackbar-toastit
 				popover
 				timeoutMs="-1"
-				styles=${this.options.styles ?? ''}
+				style=${this.options.styles ?? ''}
 				?leading=${this.options.leading}
 				@toggle=${(event: any) => {
 					if (event.newState === 'closed') {
