@@ -43,6 +43,9 @@ class ToastIt extends LitElement {
 				style=${this.options.styles ?? ''}
 				?leading=${this.options.leading}
 				@toggle=${(event: any) => {
+					if (this.options.debug) {
+						console.log('[toastit] toggle event received.', event.newState);
+					}
 					if (event.newState === 'closed') {
 						clearTimeout(this.#timeout);
 						this.remove();
@@ -75,9 +78,12 @@ class ToastIt extends LitElement {
 		this.snackbar.togglePopover();
 		this.snackbar.show();
 
-		this.#timeout = setTimeout(() => {
-			this.snackbar.close();
-		}, this.options.timeoutMs);
+		this.#timeout = setTimeout(
+			() => {
+				this.snackbar.close();
+			},
+			this.options.timeoutMs === -1 ? 2147483647 : this.options.timeoutMs,
+		);
 	}
 
 	close() {
@@ -88,7 +94,7 @@ window.customElements.define('toast-it', ToastIt);
 
 let previousToaster: ToastIt = null;
 
-export default function (message: any, options?: Partial<Options>) {
+export const toast = function (message: any, options?: Partial<Options>) {
 	return new Promise(async (_resolve: (value: void) => void, _reject) => {
 		if (previousToaster) {
 			previousToaster.close();
@@ -99,4 +105,5 @@ export default function (message: any, options?: Partial<Options>) {
 
 		document.body.prepend(toaster);
 	});
-}
+};
+export default toast;
