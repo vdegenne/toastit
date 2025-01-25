@@ -1,5 +1,5 @@
 <script type="module">
-	import toast from './index.js';
+	import toast from './src/index.ts';
 
 	async function test1() {
 		const {snackbar, closePromise} = toast('hey, folks!');
@@ -20,8 +20,8 @@
 	}
 
 	setTimeout(async () => {
-		// test1();
-		test2();
+		test1();
+		// test2();
 	}, 1000);
 </script>
 <body></body>

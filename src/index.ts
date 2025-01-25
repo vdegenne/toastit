@@ -1,4 +1,4 @@
-import {Snackbar} from '@material/mwc-snackbar';
+import {type Snackbar} from '@material/mwc-snackbar';
 import {SnackbarBase} from '@material/mwc-snackbar/mwc-snackbar-base.js';
 import {styles} from '@material/mwc-snackbar/mwc-snackbar.css.js';
 import {strings} from '@material/snackbar/constants.js';
