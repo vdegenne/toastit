@@ -22,19 +22,31 @@
 		"build": {
 			"dependencies": [
 				"build:ts",
-				"build:esbuild"
+				"build:rollup"
 			]
 		},
 		"build:ts": {
 			"command": "tsc --pretty",
 			"clean": "if-file-deleted",
 			"files": [
-				"src",
-				"tsconfig.json"
+				"./src/",
+				"./tsconfig.json"
 			],
 			"output": [
 				"./lib/index.d.ts",
 				"./lib/index.js"
+			]
+		},
+		"build:rollup": {
+			"command": "rollup -c",
+			"dependencies": [
+				"build:ts"
+			],
+			"files": [
+				"./rollup.config.js"
+			],
+			"output": [
+				"./index.js"
 			]
 		},
 		"build:esbuild": {
@@ -47,7 +59,7 @@
 				"./esbuild.config.js"
 			],
 			"output": [
-				"index.js"
+				"./index.js"
 			]
 		}
 	},
@@ -59,9 +71,10 @@
 	"devDependencies": {
 		"@material/mwc-snackbar": "^0.27.0",
 		"@material/snackbar": "^14.0.0",
-		"esbuild": "^0.24.2",
-		"lit": "^3.2.1",
-		"shx": "^0.3.4",
+		"@rollup/plugin-node-resolve": "^16.0.0",
+		"@rollup/plugin-terser": "^0.4.4",
+		"rollup": "^4.32.0",
+		"rollup-plugin-minify-template-literals": "^1.1.7",
 		"typescript": "^5.7.3",
 		"vite": "^6.0.11",
 		"wireit": "^0.14.9"
