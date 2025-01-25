@@ -1,6 +1,7 @@
-import '@material/mwc-snackbar';
-import {type Snackbar} from '@material/mwc-snackbar';
-import {LitElement, css, html} from 'lit';
+import {Snackbar} from '@material/mwc-snackbar';
+import {SnackbarBase} from '@material/mwc-snackbar/mwc-snackbar-base.js';
+import {styles} from '@material/mwc-snackbar/mwc-snackbar.css.js';
+import {strings} from '@material/snackbar/constants.js';
 
 interface Options {
 	timeoutMs: number;
@@ -9,101 +10,61 @@ interface Options {
 	debug: boolean;
 }
 
-class ToastIt extends LitElement {
-	#timeout: number;
+let previousToast:
+	| {
+			snackbar: Snackbar;
+			resolvers: PromiseWithResolvers<void>;
+	  }
+	| undefined = undefined;
 
-	constructor(
-		readonly message: any,
-		readonly options?: Options,
-	) {
-		super();
-		this.options = Object.assign(
-			{},
-			{timeoutMs: 3000, leading: false, debug: false} as Options,
-			this.options,
-		);
+function toast(message: any, options?: Partial<Options>) {
+	if (previousToast) {
+		previousToast.snackbar.close();
 	}
 
-	get dialog() {
-		return this.renderRoot.querySelector('dialog')!;
+	const resolvers = Promise.withResolvers<void>();
+	const {promise: closePromise, resolve, reject} = resolvers;
+
+	// defaults option values
+	options = Object.assign(
+		{},
+		{timeoutMs: 3000, leading: false, debug: false} as Options,
+		options,
+	);
+
+	const id = Math.floor(Math.random() * 99999999);
+	const name = `mwc-snackbar-${id}`;
+	window.customElements.define(
+		name,
+		class extends SnackbarBase {
+			static styles = styles;
+		},
+	);
+	const snackbar = document.createElement(name) as Snackbar;
+	function killSnackbar() {
+		snackbar.remove();
 	}
-	get snackbar() {
-		return this.renderRoot.querySelector('mwc-snackbar-toastit') as Snackbar;
-	}
-
-	render() {
-		if (this.options.debug) {
-			console.log(this.options);
-		}
-		return html`<!---->
-			<!-- <dialog> -->
-			<mwc-snackbar-toastit
-				popover
-				timeoutMs="-1"
-				style=${this.options.styles ?? ''}
-				?leading=${this.options.leading}
-				@toggle=${(event: any) => {
-					if (this.options.debug) {
-						console.log('[toastit] toggle event received.', event.newState);
-					}
-					if (event.newState === 'closed') {
-						clearTimeout(this.#timeout);
-						this.remove();
-					}
-				}}
-			></mwc-snackbar-toastit>
-			<!-- </dialog> --> `;
-	}
-	static styles = css`
-		[popover] {
-			background-color: transparent;
-			border: none;
-			margin: 0;
-		}
-	`;
-
-	protected firstUpdated() {
-		// this.setAttribute('popover', '');
-		// @ts-ignore
-		// this.togglePopover();
-		if (typeof this.message === 'string') {
-			this.snackbar.labelText = this.message;
-		} else {
-			this.snackbar.labelText = JSON.stringify(this.message);
-		}
-
-		// this.dialog.showModal();
-		// this.snackbar.show();
-		// @ts-ignore
-		this.snackbar.togglePopover();
-		this.snackbar.show();
-
-		this.#timeout = setTimeout(
-			() => {
-				this.snackbar.close();
-			},
-			this.options.timeoutMs === -1 ? 2147483647 : this.options.timeoutMs,
-		);
-	}
-
-	close() {
-		this.snackbar.close();
-	}
-}
-window.customElements.define('toast-it', ToastIt);
-
-let previousToaster: ToastIt = null;
-
-export const toast = function (message: any, options?: Partial<Options>) {
-	return new Promise(async (_resolve: (value: void) => void, _reject) => {
-		if (previousToaster) {
-			previousToaster.close();
-		}
-
-		const toaster = new ToastIt(message, options as Options);
-		previousToaster = toaster;
-
-		document.body.prepend(toaster);
+	document.body.appendChild(snackbar);
+	snackbar.labelText = message;
+	snackbar.show();
+	snackbar.addEventListener(strings.CLOSED_EVENT, () => {
+		reject();
+		clearTimeout(closetimeout);
+		killSnackbar();
 	});
-};
+
+	const closetimeout = setTimeout(
+		() => {
+			resolve();
+			snackbar.close();
+		},
+		options.timeoutMs === -1 ? 2147483647 : options.timeoutMs,
+	);
+
+	previousToast = {snackbar, resolvers};
+
+	return {closePromise, snackbar};
+}
+
+export {toast};
 export default toast;
