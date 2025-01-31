@@ -8,7 +8,14 @@ interface Options {
 	leading: boolean;
 	styles?: string;
 	debug: boolean;
+	popover: boolean;
 }
+const defaultOptions: Options = {
+	timeoutMs: 3000,
+	leading: false,
+	debug: false,
+	popover: true,
+};
 
 let previousToast:
 	| {
@@ -26,11 +33,7 @@ function toast(message: any, options?: Partial<Options>) {
 	const {promise: closePromise, resolve, reject} = resolvers;
 
 	// defaults option values
-	options = Object.assign(
-		{},
-		{timeoutMs: 3000, leading: false, debug: false} as Options,
-		options,
-	);
+	options = Object.assign({}, defaultOptions, options);
 
 	const id = Math.floor(Math.random() * 99999999);
 	const name = `mwc-snackbar-${id}`;
@@ -45,6 +48,9 @@ function toast(message: any, options?: Partial<Options>) {
 		snackbar.remove();
 	}
 	document.body.appendChild(snackbar);
+	if (options.popover) {
+		snackbar.togglePopover();
+	}
 	snackbar.labelText = message;
 	snackbar.show();
 	snackbar.addEventListener(strings.CLOSED_EVENT, () => {
