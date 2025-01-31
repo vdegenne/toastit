@@ -49,6 +49,9 @@ function toast(message: any, options?: Partial<Options>) {
 	}
 	document.body.appendChild(snackbar);
 	if (options.popover) {
+		snackbar.style.cssText =
+			'background-color: transparent;border: none;margin: 0;';
+		snackbar.popover = '';
 		snackbar.togglePopover();
 	}
 	snackbar.labelText = message;
