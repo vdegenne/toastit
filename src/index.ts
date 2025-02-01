@@ -55,6 +55,7 @@ function toast(message: any, options?: Partial<Options>) {
 		snackbar.togglePopover();
 	}
 	snackbar.labelText = message;
+	snackbar.leading = options.leading;
 	snackbar.show();
 	snackbar.addEventListener(strings.CLOSED_EVENT, () => {
 		reject();
