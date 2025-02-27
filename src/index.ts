@@ -54,6 +54,9 @@ function toast(message: any, options?: Partial<Options>) {
 		snackbar.popover = '';
 		snackbar.togglePopover();
 	}
+	if (typeof message === 'object') {
+		message = JSON.stringify(message);
+	}
 	snackbar.labelText = message;
 	snackbar.leading = options.leading;
 	snackbar.show();
