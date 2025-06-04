@@ -29,7 +29,7 @@ toast('Hello');
 toast('How is it going?', {leading: true, timeoutMs: 1000 * 5}); // 5s before it auto closes
 ```
 
-You can also use the minified version of esm if you just want to test something (but not recommended in production)
+You can also use the minified version of esm if you just want to test something (but not recommended for production)
 
 ```js
 import {toast} from 'toastit/min'
