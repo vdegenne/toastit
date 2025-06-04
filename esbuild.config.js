@@ -23,8 +23,8 @@ const customElementPlugin = {
 };
 
 await esbuild.build({
-	entryPoints: ['lib/index.js'],
-	outfile: 'index.js',
+	entryPoints: ['./lib/index.js'],
+	outfile: './dist/index.js',
 	format: 'esm',
 	treeShaking: true,
 	bundle: true,
@@ -32,4 +32,3 @@ await esbuild.build({
 	legalComments: 'external',
 	plugins: [customElementPlugin],
 });
-

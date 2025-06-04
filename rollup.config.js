@@ -5,7 +5,7 @@ import {minifyTemplateLiterals} from 'rollup-plugin-minify-template-literals';
 /** @type {import('rollup').RollupOptions} */
 export default {
 	input: './lib/index.js',
-	output: {file: 'index.js', format: 'es'},
+	output: {file: './dist/toastit.min.js', format: 'iife'},
 	plugins: [
 		nodeResolve(),
 		minifyTemplateLiterals(),

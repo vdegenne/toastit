@@ -1,10 +1,15 @@
 {
 	"name": "toastit",
-	"version": "2.1.3",
+	"version": "2.1.4",
 	"type": "module",
+	"main": "./dist/toastit.min.js",
 	"exports": {
 		".": {
-			"default": "./index.js",
+			"import": "./index.js",
+			"types": "./lib/index.d.ts"
+		},
+		"./esm": {
+			"import": "./lib/index.js",
 			"types": "./lib/index.d.ts"
 		}
 	},
@@ -33,8 +38,7 @@
 				"./tsconfig.json"
 			],
 			"output": [
-				"./lib/index.d.ts",
-				"./lib/index.js"
+				"./lib/"
 			]
 		},
 		"build:rollup": {
@@ -46,16 +50,16 @@
 				"./rollup.config.js"
 			],
 			"output": [
-				"./index.js"
+				"./dist/toastit.min.js"
 			]
 		},
 		"build:esbuild": {
+			"#": "DEPRECATED",
 			"command": "node esbuild.config.js",
 			"dependencies": [
 				"build:ts"
 			],
 			"files": [
-				"./lib/index.js",
 				"./esbuild.config.js"
 			],
 			"output": [
@@ -64,19 +68,21 @@
 		}
 	},
 	"files": [
-		"./index.js",
 		"./lib",
+		"./dist",
 		"./index.js.LEGAL.txt"
 	],
+	"dependencies": {
+		"@material/mwc-snackbar": "^0.27.0"
+	},
 	"devDependencies": {
-		"@material/mwc-snackbar": "^0.27.0",
 		"@material/snackbar": "^14.0.0",
-		"@rollup/plugin-node-resolve": "^16.0.0",
+		"@rollup/plugin-node-resolve": "^16.0.1",
 		"@rollup/plugin-terser": "^0.4.4",
-		"rollup": "^4.32.0",
+		"rollup": "^4.41.1",
 		"rollup-plugin-minify-template-literals": "^1.1.7",
-		"typescript": "^5.7.3",
-		"vite": "^6.0.11",
-		"wireit": "^0.14.9"
+		"typescript": "^5.8.3",
+		"vite": "^6.3.5",
+		"wireit": "^0.14.12"
 	}
 }
