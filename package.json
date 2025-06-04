@@ -1,15 +1,17 @@
 {
 	"name": "toastit",
-	"version": "2.1.4",
+	"version": "2.2.1",
 	"type": "module",
 	"main": "./dist/toastit.min.js",
+	"module": "./dist/toastit.esm.min.js",
+	"types": "./lib/index.d.ts",
 	"exports": {
 		".": {
-			"import": "./index.js",
+			"import": "./lib/index.js",
 			"types": "./lib/index.d.ts"
 		},
-		"./esm": {
-			"import": "./lib/index.js",
+		"./min": {
+			"import": "./dist/toastit.esm.min.js",
 			"types": "./lib/index.d.ts"
 		}
 	},
@@ -50,7 +52,7 @@
 				"./rollup.config.js"
 			],
 			"output": [
-				"./dist/toastit.min.js"
+				"./dist/"
 			]
 		},
 		"build:esbuild": {

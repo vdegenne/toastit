@@ -79,5 +79,4 @@ function toast(message: any, options?: Partial<Options>) {
 	return {closePromise, snackbar};
 }
 
-export {toast};
 export default toast;
